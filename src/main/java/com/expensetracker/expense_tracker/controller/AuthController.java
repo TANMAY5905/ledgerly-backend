@@ -70,11 +70,9 @@ public class AuthController {
 
     @PostMapping("/forgot-password")
     public Map<String, String> forgotPassword(@RequestParam String email){
-        String link = authService.sendResetToken(email);
+        authService.sendResetToken(email);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Reset link sent to your registered email");
-        // For development/debugging purposes, we could put the link here if email isn't actually sent
-        response.put("debug_link", link); 
         return response;
     }
 }

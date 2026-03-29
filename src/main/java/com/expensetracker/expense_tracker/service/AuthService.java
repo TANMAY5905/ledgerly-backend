@@ -72,8 +72,8 @@ public class AuthService {
     // ✅ FORGOT PASSWORD (EMAIL BASED)
     public String sendResetToken(String email){
 
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepository.findByEmailIgnoreCase(email.trim())
+                .orElseThrow(() -> new RuntimeException("User not found with registered email"));
 
         String token = UUID.randomUUID().toString();
 
