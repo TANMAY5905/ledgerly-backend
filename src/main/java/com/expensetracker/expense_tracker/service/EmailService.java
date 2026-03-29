@@ -14,6 +14,9 @@ public class EmailService {
     private static final Logger logger = LoggerFactory.getLogger(EmailService.class);
     private final JavaMailSender mailSender;
 
+    @org.springframework.beans.factory.annotation.Value("${spring.mail.username}")
+    private String fromEmail;
+
     public EmailService(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
@@ -35,7 +38,7 @@ public class EmailService {
             helper.setText(htmlMsg, true);
             helper.setTo(to);
             helper.setSubject("Reset your Ledgerly Password");
-            helper.setFrom("ledgerly.info@gmail.com"); // Set to your authenticated email
+            helper.setFrom(fromEmail); // Use the injected mail username
             
             mailSender.send(mimeMessage);
             logger.info("Successfully sent reset email to: {}", to);
